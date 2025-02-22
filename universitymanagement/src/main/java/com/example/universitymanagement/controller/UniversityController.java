@@ -19,10 +19,13 @@ public class UniversityController {
         this.universityService = universityService;
         this.universityRepository = universityRepository;
     }
-    @PostMapping
-    public University createUniversity(@RequestBody University university) {
-        return universityRepository.save(university);
+
+    @PostMapping // "/university" емес, негізгі route-ты қолданамыз
+    public String addUniversity(@RequestBody University university) {
+        universityRepository.save(university);
+        return "University added successfully!";
     }
+
     @GetMapping
     public List<University> getAllUniversities() {
         return universityService.getAllUniversities();

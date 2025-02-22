@@ -1,17 +1,30 @@
 package com.example.universitymanagement.controller;
 
+import com.example.universitymanagement.model.Professor;
+import com.example.universitymanagement.repository.ProfessorRepository;
+import com.example.universitymanagement.service.ProfessorService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
-import com.example.universitymanagement.service.ProfessorService;
-import com.example.universitymanagement.model.Professor;
 @RestController
 @RequestMapping("/api/universitymanagement/professor")
 public class ProfessorController {
 
+    private final ProfessorService professorService;
+    private final ProfessorRepository professorRepository;
+
     @Autowired
-    private ProfessorService professorService;
+    public ProfessorController(ProfessorService professorService, ProfessorRepository professorRepository) {
+        this.professorService = professorService;
+        this.professorRepository = professorRepository;
+    }
+
+    @PostMapping
+    public String addProfessor(@RequestBody Professor professor) {
+        professorRepository.save(professor);
+        return "Professor added successfully!";
+    }
 
     @GetMapping
     public List<Professor> getAllProfessors() {
